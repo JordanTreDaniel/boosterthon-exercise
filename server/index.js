@@ -18,4 +18,10 @@ app.get("/", (req, res) => {
   res.send("Hi There");
 });
 
+app.get("/test", (req, res) => {
+  res
+    .status(200)
+    .json({ msg: "Jordan would be such a great employee to hire." });
+});
+
 app.listen("3001", () => {});
