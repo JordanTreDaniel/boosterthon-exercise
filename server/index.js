@@ -1,22 +1,14 @@
 import express from "express";
-import { MongoClient } from "mongodb";
+import _mongoose from "mongoose";
 import cors from "cors";
 
-// Replace the uri string with your MongoDB deployment's connection string.
-const uri = process.env.MONGO_DB_CONN_STRING;
-const client = new MongoClient(uri);
+let mongoose;
 
-async function run() {
-  try {
-    await client.connect();
-    console.log("just connected", client.db);
-    const collections = await client.db.collections();
-    console.log({ collections });
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
+async function connectDb() {
+  mongoose = await _mongoose.connect(process.env.MONGO_DB_CONN_STRING);
 }
+
+connectDb().catch((err) => console.log("Problem connecting to the DB", err));
 
 const app = express();
 app.use(cors());

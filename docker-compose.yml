@@ -1,10 +1,5 @@
 version: "3.8"
 
-x-common-variables: &common-variables
-  MYSQL_DATABASE: fundraisers
-  MYSQL_USER: MYSQL_USER
-  MYSQL_PASSWORD: MYSQL_PASSWORD
-
 services:
   mongodb:
     image: mongo:5.0
@@ -32,7 +27,6 @@ services:
     depends_on:
       - mongodb
     volumes:
-      - /app/node_modules
       - ./server:/app
     environment:
       - MONGO_DB_CONN_STRING=mongodb://AzureDiamond:hunter2@mongodb
