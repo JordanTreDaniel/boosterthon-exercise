@@ -50,7 +50,6 @@ app.get("/seedthedb", (req, res) => {
       getRandomElement(adjectives) + " " + getRandomElement(nouns)
     );
   }
-  run().catch(console.dir);
 
   //will there be resposne? get ids and then..
   //from those ten fundraisers, randomly create 20 reviews
