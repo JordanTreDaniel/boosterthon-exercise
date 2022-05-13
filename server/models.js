@@ -1,15 +1,19 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
 const ReviewSchema = new mongoose.Schema({
   fundraiser: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Fundraiser",
     required: true,
   },
   rating: { type: Number, required: true },
   review: { type: String, required: true },
   date: { type: Date, default: Date.now },
-  reviewer: { type: Schema.Types.ObjectId, ref: "Reviewer", required: true },
+  reviewer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Reviewer",
+    required: true,
+  },
 });
 
 // const validateEmail = function (email) {
@@ -26,8 +30,6 @@ const FundraiserSchema = new mongoose.Schema({
   name: { type: String, required: true },
 });
 
-export default {
-  Review: mongoose.model("Review", ReviewSchema),
-  Reviewer: mongoose.model("Reviewer", ReviewerSchema),
-  Fundraiser: mongoose.model("Fundraiser", FundraiserSchema),
-};
+export const Review = mongoose.model("Review", ReviewSchema);
+export const Reviewer = mongoose.model("Reviewer", ReviewerSchema);
+export const Fundraiser = mongoose.model("Fundraiser", FundraiserSchema);
