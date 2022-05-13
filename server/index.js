@@ -1,9 +1,8 @@
 import express from "express";
 import _mongoose from "mongoose";
 import cors from "cors";
-import { getRandomElement } from "./helpers.js";
+import { getRandomElement, loremIpsum } from "./helpers.js";
 import { Fundraiser, Review, Reviewer } from "./models.js";
-
 let mongoose;
 async function connectDb() {
   mongoose = await _mongoose.connect(process.env.MONGO_DB_CONN_STRING);
@@ -26,13 +25,22 @@ app.get("/test", (req, res) => {
     .json({ msg: "Jordan would be such a great employee to hire." });
 });
 
+app.get("/data", async (req, res) => {
+  const reviews = await Review.find()
+    .populate("fundraiser")
+    .populate("reviewer");
+
+  res.status(200).json({ reviews: reviews.map((r) => r.toObject()) });
+});
+
 app.get("/seedthedb", async (req, res) => {
+  console.log("what the fuck");
   await Fundraiser.deleteMany();
   await Review.deleteMany();
   await Reviewer.deleteMany();
 
   let fundraisers = await Fundraiser.find();
-
+  console.log("after deleting", { fundraisers });
   if (!fundraisers.length) {
     const adjectives = ["Funny", "Red", "Tangible", "Observant", "Dangerous"];
     const nouns = ["Sanctuary", "Refuge", "Academy", "Place", "School"];
@@ -49,7 +57,7 @@ app.get("/seedthedb", async (req, res) => {
 
   let reviews = await Review.find().populate("fundraiser");
   if (!reviews.length) {
-    const firstnames = [
+    const firstNames = [
       "Alexa",
       "Jordan",
       "John",
@@ -68,15 +76,16 @@ app.get("/seedthedb", async (req, res) => {
       "Southerly",
     ];
     for (let i = 0; i < 20; i++) {
-      const reviewerName = `${getRandomElement(firstnames)} ${getRandomElement(
-        lastNames
-      )}`;
+      const randomFirstName = getRandomElement(firstNames);
+      const randomLastName = getRandomElement(lastNames);
+      const reviewerName = `${randomFirstName} ${randomLastName}`;
+      const reviewerEmail = `${randomFirstName.toLocaleLowerCase()}${randomLastName.toLocaleLowerCase()}@fakegmail.com`;
       const reviewer = await Reviewer.create({
         name: reviewerName,
-        email: `${reviewerName}@fakegmail.com`,
+        email: reviewerEmail,
       });
       const rating = Math.floor(Math.random() * 5);
-      const review = "Lorem ipsum";
+      const review = loremIpsum;
       const date = Date.now();
       const randomFundraiser = getRandomElement(fundraisers);
       reviews.push({
