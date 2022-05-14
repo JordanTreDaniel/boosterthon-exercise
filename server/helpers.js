@@ -10,3 +10,13 @@ Nam rhoncus nibh aliquam porta dictum. Morbi a dictum lorem. Maecenas fermentum 
 Etiam ornare sagittis odio sagittis facilisis. Cras sit amet tempor magna. Donec lacinia nulla vitae metus dictum, sit amet laoreet purus fringilla. Fusce suscipit urna nibh, vitae gravida sem elementum sit amet. Etiam ullamcorper suscipit erat sit amet interdum. Nam sodales turpis sit amet placerat cursus. Donec sed arcu eget enim faucibus sagittis. In volutpat, nulla vitae dictum imperdiet, lorem neque facilisis nisl, ac suscipit diam elit et purus. Etiam ut massa varius, commodo est nec, aliquam ex. Quisque metus nisi, ultrices id congue non, commodo sit amet nibh.
 
 Praesent elementum ullamcorper fermentum. Pellentesque sed interdum odio, in laoreet nisi. Nunc ac ullamcorper ex, eu tristique dolor. Etiam vel egestas ex. Quisque sodales ipsum non commodo vulputate. Sed accumsan suscipit tellus, vitae pellentesque dui tincidunt a. Donec sit amet augue velit. Aliquam interdum diam eu leo pulvinar tristique. Quisque rhoncus velit non enim sagittis varius. Donec justo mi, sodales eu.`;
+
+export const imageAddresses = [
+  `https://images.pexels.com/photos/7363695/pexels-photo-7363695.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
+  `https://images.pexels.com/photos/7363696/pexels-photo-7363696.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
+  `https://images.pexels.com/photos/6994963/pexels-photo-6994963.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500`,
+  `https://images.pexels.com/photos/5029919/pexels-photo-5029919.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500`,
+  `https://images.pexels.com/photos/6646816/pexels-photo-6646816.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500`,
+  `https://images.pexels.com/photos/1477430/pexels-photo-1477430.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
+  `https://images.pexels.com/photos/269176/pexels-photo-269176.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
+];

@@ -28,6 +28,7 @@ const ReviewerSchema = new mongoose.Schema({
 
 const FundraiserSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  imageUrl: { type: String, required: true },
 });
 
 export const Review = mongoose.model("Review", ReviewSchema);

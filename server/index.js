@@ -1,7 +1,7 @@
 import express from "express";
 import _mongoose from "mongoose";
 import cors from "cors";
-import { getRandomElement, loremIpsum } from "./helpers.js";
+import { getRandomElement, imageAddresses, loremIpsum } from "./helpers.js";
 import { Fundraiser, Review, Reviewer } from "./models.js";
 let mongoose;
 async function connectDb() {
@@ -26,11 +26,13 @@ app.get("/test", (req, res) => {
 });
 
 app.get("/data", async (req, res) => {
-  const reviews = await Review.find()
-    .populate("fundraiser")
-    .populate("reviewer");
+  const reviews = await Review.find().populate("reviewer");
+  const fundraisers = await Fundraiser.find();
 
-  res.status(200).json({ reviews: reviews.map((r) => r.toObject()) });
+  res.status(200).json({
+    reviews: reviews.map((r) => r.toObject()),
+    fundraisers: fundraisers.map((f) => f.toObject()),
+  });
 });
 
 app.get("/seedthedb", async (req, res) => {
@@ -47,6 +49,7 @@ app.get("/seedthedb", async (req, res) => {
     for (let i = 0; i < 10; i++) {
       fundraisers.push({
         name: getRandomElement(adjectives) + " " + getRandomElement(nouns),
+        imageUrl: getRandomElement(imageAddresses)
       });
     }
 
