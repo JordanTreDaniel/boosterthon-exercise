@@ -6,6 +6,11 @@ export const dataRefreshTrigger = atom({
   default: Date.now(),
 });
 
+export const fundraiserBeingCreated = atom({
+  key: "fundraiserBeingCreated",
+  default: false,
+});
+
 export const getFundraisers = selector({
   key: "fundraisers",
   get: async ({ get }) => {

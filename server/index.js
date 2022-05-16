@@ -91,6 +91,29 @@ app.post("/fundraisers/:fundraiserId/review", async (req, res) => {
   }
 });
 
+app.post("/fundraisers/new", async (req, res) => {
+  try {
+    const { body } = req;
+    const { newFundraiser } = body;
+    const { name, imageUrl } = newFundraiser;
+
+    let fundraiser = await Fundraiser.create({
+      name,
+      imageUrl:
+        imageUrl && imageUrl.length
+          ? imageUrl
+          : getRandomElement(imageAddresses),
+    });
+    await fundraiser.save();
+
+    res.status(200).json({
+      fundraiser: fundraiser.toObject(),
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 app.get("/seedthedb", async (req, res) => {
   await Fundraiser.deleteMany();
   await Review.deleteMany();

@@ -56,6 +56,7 @@ const ReviewForm = (props) => {
           }}
         ></Slider>
         <Input
+          required
           type="text"
           value={get(newReview, ["reviewer", "firstName"])}
           onChange={(e) =>
@@ -67,6 +68,7 @@ const ReviewForm = (props) => {
           placeholder="First Name"
         ></Input>
         <Input
+          required
           type="text"
           value={get(newReview, ["reviewer", "lastName"])}
           onChange={(e) =>
@@ -78,6 +80,7 @@ const ReviewForm = (props) => {
           placeholder="Last Name"
         ></Input>
         <Input
+          required
           type="email"
           value={get(newReview, ["reviewer", "email"])}
           onChange={(e) =>
@@ -89,6 +92,7 @@ const ReviewForm = (props) => {
           placeholder="Email"
         ></Input>
         <Input
+          required
           type="textarea"
           fullWidth
           placeholder={`${fundraiserName} is such a...`}
