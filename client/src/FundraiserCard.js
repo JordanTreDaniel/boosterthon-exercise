@@ -7,12 +7,19 @@ import {
   CardActions,
   Typography,
 } from "@mui/material";
+import { useSetRecoilState } from "recoil";
+import { currentFundraiserId } from "./recoil";
 
 const FundraiserCard = (props) => {
   const { fundraiser } = props;
-  const { name, imageUrl } = fundraiser;
+  const { name, imageUrl, _id } = fundraiser;
+  const setCurrentFundraiserId = useSetRecoilState(currentFundraiserId);
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      onClick={() => {
+        setCurrentFundraiserId(_id);
+      }}
+    >
       <CardMedia
         component="img"
         height="140"

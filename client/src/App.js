@@ -2,20 +2,19 @@ import "./App.css";
 import React from "react";
 import { useRecoilValueLoadable } from "recoil";
 import { Grid } from "@mui/material";
-import { getFundraisers, getReviews } from "./recoil";
+import { getFundraisers } from "./recoil";
 import FundraiserCard from "./FundraiserCard";
+import Reviews from "./Reviews";
 
 function App() {
   // const reviewsLoadable = useRecoilValueLoadable(getFundraisers);
   const fundraisersLoadable = useRecoilValueLoadable(getFundraisers);
   return (
     <div className="App">
-      <header className="App-header"></header>
+      <Reviews></Reviews>
       <Grid id="Fundraiser List">
-        {fundraisersLoadable.state === "loading" ? "Loading" : "Not Loading"}
         {fundraisersLoadable.state !== "loading"
           ? fundraisersLoadable.contents.map((fundraiser, idx) => {
-              console.log("This is the American", fundraiser);
               return <FundraiserCard key={idx} fundraiser={fundraiser} />;
             })
           : "Wait"}
