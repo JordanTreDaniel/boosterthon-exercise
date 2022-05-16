@@ -8,7 +8,7 @@ async function connectDb() {
   mongoose = await _mongoose.connect(process.env.MONGO_DB_CONN_STRING);
 }
 
-connectDb().catch((err) => console.log("Problem connecting to the DB", err));
+connectDb().catch((err) => console.error("Problem connecting to the DB", err));
 
 const app = express();
 app.use(cors());
@@ -25,31 +25,42 @@ app.get("/test", (req, res) => {
     .json({ msg: "Jordan would be such a great employee to hire." });
 });
 
-app.get("/data", async (req, res) => {
-  const reviews = await Review.find().populate("reviewer");
+app.get("/fundraisers", async (req, res) => {
   const fundraisers = await Fundraiser.find();
-
   res.status(200).json({
-    reviews: reviews.map((r) => r.toObject()),
     fundraisers: fundraisers.map((f) => f.toObject()),
   });
 });
 
+app.get("/fundraisers/:fundraiserId", async (req, res) => {
+  const { params } = req;
+  const { fundraiserId } = params;
+  const fundraiser = await Fundraiser.findById(fundraiserId);
+  const reviews = await Review.find({ fundraiser: fundraiserId }).populate(
+    "reviewer"
+  );
+
+  res.status(200).json({
+    fundraiser: {
+      ...fundraiser.toObject(),
+      reviews: reviews.map((r) => r.toObject()),
+    },
+  });
+});
+
 app.get("/seedthedb", async (req, res) => {
-  console.log("what the fuck");
   await Fundraiser.deleteMany();
   await Review.deleteMany();
   await Reviewer.deleteMany();
 
   let fundraisers = await Fundraiser.find();
-  console.log("after deleting", { fundraisers });
   if (!fundraisers.length) {
     const adjectives = ["Funny", "Red", "Tangible", "Observant", "Dangerous"];
     const nouns = ["Sanctuary", "Refuge", "Academy", "Place", "School"];
     for (let i = 0; i < 10; i++) {
       fundraisers.push({
         name: getRandomElement(adjectives) + " " + getRandomElement(nouns),
-        imageUrl: getRandomElement(imageAddresses)
+        imageUrl: getRandomElement(imageAddresses),
       });
     }
 
