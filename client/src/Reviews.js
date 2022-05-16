@@ -56,7 +56,7 @@ const Reviews = () => {
                 const displayDate = new Date(date).toLocaleDateString();
                 return (
                   <ListItem key={i}>
-                    <Card>
+                    <Card style={{ width: "100%" }}>
                       <Card sx={{ maxWidth: 345 }}>
                         <CardContent>
                           <Grid container wrap="nowrap">
