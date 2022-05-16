@@ -1,15 +1,16 @@
 import axios from "axios";
 import { selector, atom } from "recoil";
 
-export const fetchData = selector({
-  key: "fetchData",
-  get: async () => {},
+export const dataRefreshTrigger = atom({
+  key: "dataRefreshTrigger",
+  default: Date.now(),
 });
 
 export const getFundraisers = selector({
   key: "fundraisers",
   get: async ({ get }) => {
     try {
+      get(dataRefreshTrigger);
       const response = await axios.get("/api/fundraisers");
       return response.data.fundraisers;
     } catch (err) {
@@ -27,6 +28,7 @@ export const currentFundraiserId = atom({
 export const getFundraiserDetails = selector({
   key: "getFundraiserDetails",
   get: async ({ get }) => {
+    get(dataRefreshTrigger);
     const fundraiserId = get(currentFundraiserId);
     if (fundraiserId) {
       try {

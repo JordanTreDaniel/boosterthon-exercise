@@ -48,6 +48,49 @@ app.get("/fundraisers/:fundraiserId", async (req, res) => {
   });
 });
 
+app.post("/fundraisers/:fundraiserId/review", async (req, res) => {
+  try {
+    const { params, body } = req;
+    const { fundraiserId } = params;
+    const { newReview } = body;
+    const { reviewer: newReviewer } = newReview;
+    const anonReviewer = {
+      name: `${newReviewer.firstName} ${newReviewer.lastName}`,
+      email: newReviewer.email,
+    };
+    let reviewer = await Reviewer.findOne(anonReviewer).exec();
+    if (reviewer) {
+      const existingReviews = await Review.find({
+        reviewer: reviewer._id,
+        fundraiser: fundraiserId,
+      }).exec();
+      if (existingReviews.length) {
+        res.status(406).json("You may not review the same fundraiser twice.");
+        return;
+      }
+    } else {
+      reviewer = await Reviewer.create(anonReviewer);
+      await reviewer.save();
+    }
+    let review = await Review.create({
+      ...newReview,
+      reviewer: reviewer._id,
+      fundraiser: fundraiserId,
+    });
+    const reviewId = review._id;
+    await review.save();
+    review = await Review.findById(reviewId)
+      .populate("reviewer")
+      .populate("fundraiser")
+      .exec();
+    res.status(200).json({
+      review: review.toObject(),
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 app.get("/seedthedb", async (req, res) => {
   await Fundraiser.deleteMany();
   await Review.deleteMany();

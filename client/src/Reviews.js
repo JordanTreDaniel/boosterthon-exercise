@@ -1,12 +1,7 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { getFundraiserDetails, currentFundraiserId } from "./recoil";
+import ReviewForm from "./ReviewForm";
 import {
   Card,
   CardContent,
@@ -14,10 +9,17 @@ import {
   List,
   ListItem,
   Typography,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 
 const Reviews = () => {
+  const [reviewing, setReviewing] = React.useState(false);
   const [fundraiserId, setCurrentFundraiserId] =
     useRecoilState(currentFundraiserId);
   const currentFundraiserLoadable =
@@ -97,8 +99,16 @@ const Reviews = () => {
                 );
               })}
             </List>
+            <ReviewForm
+              reviewing={reviewing}
+              setReviewing={setReviewing}
+              fundraiser={currentFundraiser}
+            ></ReviewForm>
           </DialogContent>
           <DialogActions>
+            <Button variant="filled" onClick={() => setReviewing(true)}>
+              Review
+            </Button>
             <Button onClick={() => setCurrentFundraiserId(null)}>Close</Button>
           </DialogActions>
         </Dialog>
